@@ -1,0 +1,60 @@
+server:
+  port: 8080
+spring:
+  application:
+    #应用名称 , 可选
+    name: medical_platform
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/medical?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: root
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+  cache:
+    redis:
+     time-to-live: 1800000 #设置缓存数据的过期时间1800s,30min
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
+  freemarker:
+    cache: false  #关闭模板缓存，方便测试
+    settings:
+      template_update_delay: 0 #检查模板更新延迟时间，设置为0表示立即检查，如果时间大于0会有缓存不方便进行模板测试
+    suffix: .ftl               #指定Freemarker模板文件的后缀名
+    template-loader-path: classpath:/templates   #模板存放位置
+
+mybatis-plus:
+  configuration:
+    #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射 address_book ---> AddressBook
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    local-cache-scope: statement
+    #日志输出
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      #全局配置逻辑删除字段名
+      logic-delete-field: isDeleted
+      #逻辑已删除值（默认1）
+      logic-delete-value: 1
+      #逻辑未删除值（默认0）
+      logic-not-delete-value: 0
+delong:
+  path: D:\img\
+minio:
+  # minio配置的地址，端口9000
+  endpoint: http://127.0.0.1:9000
+  # readPath: 文件访问地址
+  readPath: http://127.0.0.1:9000
+  # 账号
+  accessKey: minioadmin
+  # 密码
+  secretKey: minioadmin
+  # MinIO桶名字
+  bucket: medical
